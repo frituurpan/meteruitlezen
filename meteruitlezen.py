@@ -3,6 +3,7 @@
 # (c) 09-2014 - Frituurpan
 
 import ConfigParser
+import os
 from classes.emoncontroller import EmonController
 from classes.input_parser import InputParser
 from classes.serialcontroller import SerialController
@@ -16,7 +17,8 @@ print ("DSMR P1 uitlezen", versie)
 print ("Control-C om te stoppen")
 
 configParser = ConfigParser.RawConfigParser()
-configFilePath = r'./config.txt'
+currentDir = os.path.dirname(os.path.abspath(__file__))
+configFilePath = currentDir + r'/config.txt'
 configParser.read(configFilePath)
 
 apiKey = configParser.get('config', 'api_key')
