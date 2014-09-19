@@ -53,48 +53,47 @@ print ("DSMR P1 uitlezen", versie)
 print ("Control-C om te stoppen")
 
 
-
 def run_program():
-    while True:
-        configParser = ConfigParser.RawConfigParser()
-        currentDir = os.path.dirname(os.path.abspath(__file__))
-        configFilePath = currentDir + r'/config.txt'
-        configParser.read(configFilePath)
 
-        apiKey = configParser.get('config', 'api_key')
-        inputUrl = configParser.get('config', 'input_url')
-        debug = configParser.getboolean('config', 'debug')
+    configParser = ConfigParser.RawConfigParser()
+    currentDir = os.path.dirname(os.path.abspath(__file__))
+    configFilePath = currentDir + r'/config.txt'
+    configParser.read(configFilePath)
 
-        #Init classes
-        inputParser = InputParser()
-        serialController = SerialController(inputParser)
-        emonController = EmonController(inputUrl, apiKey)
+    apiKey = configParser.get('config', 'api_key')
+    inputUrl = configParser.get('config', 'input_url')
+    debug = configParser.getboolean('config', 'debug')
 
-        serialController.set_debug(debug)
-        emonController.set_debug(debug)
+    #Init classes
+    inputParser = InputParser()
+    serialController = SerialController(inputParser)
+    emonController = EmonController(inputUrl, apiKey)
 
-        #open connection to meter
-        serialController.open_connection()
+    serialController.set_debug(debug)
+    emonController.set_debug(debug)
 
-        interval = 9
-        interval_counter = 0
-        try:
-            while True:
-                interval_counter += 1
-                print interval_counter
-                if interval_counter == interval:
-                    interval_counter = 0
-                    print ('read')
-                    read_serial(serialController, inputParser, emonController)
-                time.sleep(1)
-        except (KeyboardInterrupt, SystemExit):
-            print('close connection #1')
-            serialController.close_connection()
-            raise
-        finally:
-            #close connection
-            print('close connection #2')
-            serialController.close_connection()
+    #open connection to meter
+    serialController.open_connection()
+
+    interval = 9
+    interval_counter = 8
+    try:
+        while True:
+            interval_counter += 1
+            print interval_counter
+            if interval_counter == interval:
+                interval_counter = 0
+                print ('read')
+                read_serial(serialController, inputParser, emonController)
+            time.sleep(1)
+    except (KeyboardInterrupt, SystemExit):
+        print('close connection #1')
+        serialController.close_connection()
+        raise
+    finally:
+        #close connection
+        print('close connection #2')
+        serialController.close_connection()
 
 
 original_sigint = signal.getsignal(signal.SIGINT)
