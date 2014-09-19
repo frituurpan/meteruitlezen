@@ -1,7 +1,6 @@
+__author__ = 'Frituurpan'
+
 import sys
-
-__author__ = 'Administrator'
-
 
 class InputParser:
     energyTotal = -1

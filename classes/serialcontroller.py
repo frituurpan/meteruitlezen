@@ -1,9 +1,8 @@
-import serial
+__author__ = 'Frituurpan'
+
 import sys
-from input_parser import InputParser
-
-__author__ = 'Administrator'
-
+import serial
+from classes.input_parser import InputParser
 
 class SerialController:
     inputParser = InputParser

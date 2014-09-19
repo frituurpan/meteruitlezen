@@ -1,10 +1,11 @@
 # DSMR P1 uitlezen
 # (c) 10-2012 - GJ - gratis te kopieren en te plakken
 # (c) 09-2014 - Frituurpan
+
 import ConfigParser
-from emoncontroller import EmonController
-from input_parser import InputParser
-from serialcontroller import SerialController
+from classes.emoncontroller import EmonController
+from classes.input_parser import InputParser
+from classes.serialcontroller import SerialController
 
 versie = "3.0"
 
