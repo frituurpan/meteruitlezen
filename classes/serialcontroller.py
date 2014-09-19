@@ -14,7 +14,7 @@ class SerialController:
         self.inputParser = input_parser
 
         # Set COM port config
-        self.ser = serial.Serial()
+        self.serialConnection = serial.Serial()
         self.get_connection().baudrate = 9600
         self.get_connection().bytesize = serial.SEVENBITS
         self.get_connection().parity = serial.PARITY_EVEN
