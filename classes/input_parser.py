@@ -48,6 +48,11 @@ class InputParser:
     def convert_value(val):
         return int(float(val) * 1000)
 
+    def reset(self):
+        self.energyTotal = -1
+        self.gasTotal = -1
+        self.currentWatts = -1
+
     def get_energy_total(self):
         return self.energyTotal
 

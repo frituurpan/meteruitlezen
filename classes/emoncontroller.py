@@ -29,7 +29,6 @@ class EmonController:
         return params
 
     def build_url(self, pay_load):
-        print pay_load
         url = str(self.emonUrl) + '?' + 'apikey=' + self.apiKey + '&data=' + str(pay_load)
         return url
 
