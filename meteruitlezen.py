@@ -16,7 +16,7 @@ print ("DSMR P1 uitlezen", versie)
 print ("Control-C om te stoppen")
 
 configParser = ConfigParser.RawConfigParser()
-configFilePath = r'config.txt'
+configFilePath = r'./config.txt'
 configParser.read(configFilePath)
 
 apiKey = configParser.get('config', 'api_key')

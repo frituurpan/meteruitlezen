@@ -32,7 +32,7 @@ class SerialController:
             if self.is_debug():
                 print("Skip exit")
             else:
-                sys.exit("Fout bij het openen van %s. Aaaaarch." % self.get_connection().name)
+                sys.exit("Fout bij het openen van %s. Aaaaarch.")
 
     def read_input(self):
         if self.is_debug():
