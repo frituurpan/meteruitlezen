@@ -13,7 +13,7 @@ class EmonController:
         self.emonUrl = emonurl
         self.apiKey = apikey
 
-    def create_payload(self, gastotal, energytotal):
+    def create_payload(self, gastotal, energytotal, current_watts):
         """
         :param gastotal:
         :param energytotal:
@@ -25,7 +25,7 @@ class EmonController:
         else:
             node_id = 20
 
-        params = '[[4,' + str(node_id) + ',' + str(gastotal) + ',' + str(energytotal) + ']]'
+        params = '[[4,' + str(node_id) + ',' + str(gastotal) + ',' + str(energytotal) + ',' + str(current_watts) + ']]'
         return params
 
     def build_url(self, pay_load):
@@ -46,7 +46,7 @@ class EmonController:
 
     def upload_results(self, energy_total, gas_total, current_watts):
         if gas_total > 0 and energy_total > 0:
-            payload = self.create_payload(gas_total, energy_total)
+            payload = self.create_payload(gas_total, energy_total, current_watts)
 
             post_url = self.build_url(payload)
             print post_url
