@@ -1,21 +1,26 @@
 # DSMR P1 uitlezen
 # (c) 10-2012 - GJ - gratis te kopieren en te plakken
-from _socket import gaierror
+# (c) 09-2014 - Frituurpan
+import ConfigParser
 from emoncontroller import EmonController
 from input_parser import InputParser
 from serialcontroller import SerialController
 
-versie = "2.0"
-
-apiKey = ''
-inputUrl = ''
-debug = True
+versie = "3.0"
 
 # #############################################################################
-#Main program
+# Main program
 ##############################################################################
 print ("DSMR P1 uitlezen", versie)
 print ("Control-C om te stoppen")
+
+configParser = ConfigParser.RawConfigParser()
+configFilePath = r'config.txt'
+configParser.read(configFilePath)
+
+apiKey = configParser.get('config', 'api_key')
+inputUrl = configParser.get('config', 'input_url')
+debug = configParser.getboolean('config', 'debug')
 
 #Init classes
 inputParser = InputParser()
@@ -40,4 +45,4 @@ gas_total = inputParser.get_gas_total()
 current_watts = inputParser.get_current_watts()
 
 #post values
-emonController.upload_results(energy_total,gas_total,current_watts)
+emonController.upload_results(energy_total, gas_total, current_watts)

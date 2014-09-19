@@ -1,0 +1,4 @@
+[config]
+api_key = PUT_API_KEY_HERE
+input_url = http://emoncms.org/input/bulk.json
+debug = false
