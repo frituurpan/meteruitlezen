@@ -49,7 +49,6 @@ class SerialController:
             p1_teller = 0
 
             while p1_teller < 20:
-                p1_line = ''
                 #Read 1 line van de seriele poort
                 try:
                     p1_raw = self.get_connection().readline()

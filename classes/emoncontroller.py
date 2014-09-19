@@ -1,6 +1,6 @@
 __author__ = 'Frituurpan'
 
-from pip._vendor import requests
+import requests
 
 
 class EmonController:
