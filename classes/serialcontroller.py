@@ -1,3 +1,5 @@
+import time
+
 __author__ = 'Frituurpan'
 
 import sys
@@ -55,9 +57,14 @@ class SerialController:
                 sys.exit('unreliable result')
 
             print str(counter) + ': ' + p1_raw
-            counter += 1
+
             if data_in_waiting == 0:
-                counter = 0
+                counter = -1
+                #time.sleep(1)
+            elif counter == 20 and p1_raw.strip() == '!':
+                counter = -1
+            counter += 1
+
 
             #self.inputParser.process_line(p1_raw, p1_teller)
 
