@@ -78,9 +78,9 @@ def run_program():
     interval = 9
     interval_counter = 8
     try:
-        while True:
+        #while True:
             interval_counter += 1
-            print interval_counter
+            #print interval_counter
             if interval_counter == interval:
                 interval_counter = 0
                 print ('read')

@@ -13,6 +13,8 @@ class SerialController:
     def __init__(self, input_parser):
         self.inputParser = input_parser
 
+    def open_connection(self):
+
         # Set COM port config
         self.serialConnection = serial.Serial()
         self.get_connection().baudrate = 9600
@@ -22,41 +24,43 @@ class SerialController:
         self.get_connection().xonxoff = 0
         self.get_connection().rtscts = 0
         self.get_connection().timeout = 20
-        self.get_connection().port = "/dev/ttyUSB0"
 
-    def open_connection(self):
+        if self.is_debug():
+            self.get_connection().port = "COM5"
+        else:
+            self.get_connection().port = "/dev/ttyUSB0"
+
         #Open COM port
         try:
             self.get_connection().open()
-        except:
-            if self.is_debug():
-                print("Skip exit")
-            else:
-                sys.exit("Fout bij het openen van %s. Aaaaarch.")
+        except StandardError, e:
+            print e
+            sys.exit("Fout bij het openen van %s. Aaaaarch.")
 
     def read_input(self):
-        if self.is_debug():
-            counter = 0
-            with open('debugdata.txt') as f:
-                for line in f:
-                    self.inputParser.process_line(line, counter)
-                    counter += 1
+        # Initialize
+        #p1_teller is mijn tellertje voor van 0 tot 20 te tellen
+        counter = 0
+        while 1:
+            #Read 1 line van de seriele poort
+            try:
+                p1_raw = self.get_connection().readline()
+                data_in_waiting = self.get_connection().inWaiting()
 
-            print("debugging")
-        else:
-            # Initialize
-            #p1_teller is mijn tellertje voor van 0 tot 20 te tellen
-            p1_teller = 0
+            except:
+                sys.exit("Seriele poort %s kan niet gelezen worden. Aaaaaaaaarch." % self.get_connection().name)
 
-            while p1_teller < 20:
-                #Read 1 line van de seriele poort
-                try:
-                    p1_raw = self.get_connection().readline()
-                except:
-                    sys.exit("Seriele poort %s kan niet gelezen worden. Aaaaaaaaarch." % self.get_connection().name)
+            if counter == 20 and p1_raw.strip() != '!':
+                print(str(counter) + '  ' + p1_raw)
+                sys.exit('unreliable result')
 
-                self.inputParser.process_line(p1_raw, p1_teller)
-                p1_teller += 1
+            print str(counter) + ': ' + p1_raw
+            counter += 1
+            if data_in_waiting == 0:
+                counter = 0
+
+            #self.inputParser.process_line(p1_raw, p1_teller)
+
 
     def get_connection(self):
         """
@@ -69,12 +73,10 @@ class SerialController:
         self.debug = do_debug
 
     def is_debug(self):
+
         return self.debug
 
     def close_connection(self):
-        if(self.is_debug()):
-            return
-
         #Close port and show status
         try:
             self.get_connection().close()
