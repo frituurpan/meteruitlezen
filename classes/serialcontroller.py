@@ -58,10 +58,7 @@ class SerialController:
 
             print str(counter) + ': ' + p1_raw
 
-            if data_in_waiting == 0:
-                counter = -1
-                #time.sleep(1)
-            elif counter == 20 and p1_raw.strip() == '!':
+            if counter == 20 and p1_raw.strip() == '!':
                 counter = -1
             counter += 1
 
